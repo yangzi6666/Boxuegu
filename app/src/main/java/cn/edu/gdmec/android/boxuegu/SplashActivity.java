@@ -33,7 +33,7 @@ private TextView tv_version;
             e.printStackTrace();
             tv_version.setText("V");
         }
-//延迟3秒跳转
+//延迟3秒跳
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
