@@ -17,7 +17,7 @@ public class MyinfoFragment extends Fragment  {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_myinfo, null);
     }
-
+//
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
