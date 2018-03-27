@@ -1,6 +1,7 @@
 package cn.edu.gdmec.android.boxuegu.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import cn.edu.gdmec.android.boxuegu.R;
 import cn.edu.gdmec.android.boxuegu.utils.MD5Utils;
+
 
 public class LoginActivity extends AppCompatActivity {
     private TextView tv_main_title;
@@ -58,12 +60,47 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }else if(md5psw.equals(spPsw)){
                     Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                 saveLoginStatus(true,userName);
+                 Intent data = new Intent();
+                 data.putExtra("isLogin",true);
+                 setResult(RESULT_OK,data);
+                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                 LoginActivity.this.finish();
                     return;
+                }else if(spPsw!=null&&!TextUtils.isEmpty(spPsw)&&!md5psw.equals(spPsw)){
+                    Toast.makeText(LoginActivity.this,"输入的用户名和密码不一致",Toast.LENGTH_SHORT).show();
+                    return;
+                }else{
+                    Toast.makeText(LoginActivity.this,"此用户不存在",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data!=null){
+            //从注册界面传递过来的用户名
+            String userName = data.getStringExtra("userName");
+            if(!TextUtils.isEmpty(userName)){
+                et_user_name.setText(userName);
+                //设置光标的位置
+                et_user_name.setSelection(userName.length());
+            }
+        }
+    }
+
+    private void saveLoginStatus(boolean status, String userName) {
+        //loginInfo表示文件名
+        SharedPreferences sp =getSharedPreferences("loginInfo",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();//获取编辑器
+        editor.putBoolean("isLogin",status);//存入boolean类型的登录状态
+        editor.putString("loginUserName",userName);//存入登录状态时的用户名
+        editor.commit();//提交修
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
