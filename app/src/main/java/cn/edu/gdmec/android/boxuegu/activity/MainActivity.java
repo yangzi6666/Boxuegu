@@ -1,21 +1,24 @@
 package cn.edu.gdmec.android.boxuegu.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cn.edu.gdmec.android.boxuegu.Fragment.CourseFragment;
 import cn.edu.gdmec.android.boxuegu.Fragment.ExercisesFragment;
 import cn.edu.gdmec.android.boxuegu.Fragment.MyinfoFragment;
 import cn.edu.gdmec.android.boxuegu.R;
+import cn.edu.gdmec.android.boxuegu.utils.AnalysisUtils;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     private TextView tv_main;
@@ -30,6 +33,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageView bottom_bar_image_myinfo;
     private RelativeLayout bottom_bar_myinfo_btn;
     private LinearLayout main_bottom_bar;
+    protected long exitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +54,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void setSelectStatus(int index){
         switch(index){
             case 0:
-                bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon_selected);
-                bottom_bar_text_myinfo.setTextColor(Color.parseColor("#0097F7"));
 
-                bottom_bar_text_course.setTextColor(Color.parseColor("#666666"));
-                bottom_bar_text_exercises.setTextColor(Color.parseColor("#666666"));
+            bottom_bar_image_course.setImageResource(R.drawable.main_course_icon_selected);
+            bottom_bar_text_course.setTextColor(Color.parseColor("#0097F7"));
 
-                bottom_bar_image_exercises.setImageResource(R.drawable.main_exercises_icon);
-                bottom_bar_image_course.setImageResource(R.drawable.main_course_icon);
-                break;
 
+            bottom_bar_text_myinfo.setTextColor(Color.parseColor("#666666"));
+            bottom_bar_text_exercises.setTextColor(Color.parseColor("#666666"));
+
+            bottom_bar_image_exercises.setImageResource(R.drawable.main_exercises_icon);
+            bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon);
+            break;
 
             case 1:
                 bottom_bar_image_exercises.setImageResource(R.drawable.main_exercises_icon_selected);
@@ -71,15 +76,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 bottom_bar_image_course.setImageResource(R.drawable.main_course_icon);
                 bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon);
                 break;
+
             case 2:
-                bottom_bar_image_course.setImageResource(R.drawable.main_course_icon_selected);
-                bottom_bar_text_course.setTextColor(Color.parseColor("#0097F7"));
+                bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon_selected);
+                bottom_bar_text_myinfo.setTextColor(Color.parseColor("#0097F7"));
 
                 bottom_bar_text_exercises.setTextColor(Color.parseColor("#666666"));
-                bottom_bar_text_myinfo.setTextColor(Color.parseColor("#666666"));
+                bottom_bar_text_course.setTextColor(Color.parseColor("#666666"));
 
                 bottom_bar_image_exercises.setImageResource(R.drawable.main_exercises_icon);
-                bottom_bar_image_myinfo.setImageResource(R.drawable.main_my_icon);
+                bottom_bar_image_course.setImageResource(R.drawable.main_course_icon);
                 break;
 
         }
@@ -104,7 +110,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         bottom_bar_myinfo_btn.setOnClickListener(this);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data!=null){
+            setSelectStatus(0);
+        }else{
+            setSelectStatus(2);
+        }
+    }
 
     @Override
     public void onClick(View view) {
@@ -130,5 +144,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         this.getSupportFragmentManager().beginTransaction().add(R.id.main_body,new CourseFragment()).commit();
         setSelectStatus(0);
 
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime)>2000){
+                Toast.makeText(MainActivity.this,"再按一次退出博学谷",Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            }else{
+                this.finish();
+                if (AnalysisUtils.readLoginStatus(this)){
+                    AnalysisUtils.clearLoginStatus(this);
+                }
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode,event);
     }
 }
