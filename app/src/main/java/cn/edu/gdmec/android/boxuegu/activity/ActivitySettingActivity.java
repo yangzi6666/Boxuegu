@@ -64,6 +64,9 @@ instance = this;
                 startActivity(intent);
                 break;
             case R.id.rl_security_setting:
+                Intent intent2 = new Intent(ActivitySettingActivity.this,ActivityFindPswActivity.class);
+                intent2.putExtra("from","security");
+                startActivity(intent2);
                 break;
             case R.id.rl_exit_login:
                 Toast.makeText(this,"退出登录成功",Toast.LENGTH_SHORT).show();
@@ -72,6 +75,7 @@ instance = this;
                 data.putExtra("isLogin",false);
                 setResult(RESULT_OK);
                 finish();
+                MainActivity.instance.finish();
                 break;
         }
     }

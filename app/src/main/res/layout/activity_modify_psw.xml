@@ -68,7 +68,7 @@
         android:layout_marginRight="35dp"
         android:id="@+id/btn_save"
         android:background="@drawable/register_selector"
-        android:text="保 存"
+        android:text="验 证"
         android:textColor="@android:color/white"
         android:textSize="18sp"/>
 </LinearLayout>

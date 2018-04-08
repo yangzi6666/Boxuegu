@@ -57,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //等创建找回密码界面时补写
+                Intent intent = new Intent(LoginActivity.this,ActivityFindPswActivity.class);
+                startActivity(intent);
             }
         });
 

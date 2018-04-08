@@ -74,7 +74,7 @@ public class MyinfoFragment extends Fragment  implements View.OnClickListener{
                     //跳转到播放记录界面
 
                 }else{
-                    Toast.makeText(getActivity(),"您为登录，请先登录",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"您未登录，请先登录",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.rl_setting:
@@ -83,7 +83,7 @@ public class MyinfoFragment extends Fragment  implements View.OnClickListener{
                     Intent intent = new Intent(getActivity(), ActivitySettingActivity.class);
                     getActivity().startActivityForResult(intent,1);
                 }else{
-                    Toast.makeText(getActivity(),"您为登录，请先登录",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"您未登录，请先登录",Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

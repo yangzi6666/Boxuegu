@@ -47,6 +47,7 @@ public class ActivityModifyPswActivity extends Activity implements View.OnClickL
         switch (view.getId()) {
             case R.id.btn_save:
                 //TODO implement
+                submit();
                 break;
             case R.id.tv_back:
                 //TODO implement

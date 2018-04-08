@@ -34,6 +34,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private RelativeLayout bottom_bar_myinfo_btn;
     private LinearLayout main_bottom_bar;
     protected long exitTime;
+    public static MainActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.main_body,new CourseFragment()).commit();
         setMain();
+        instance = this;
     }
 
     private void setSelectStatus(int index){
@@ -111,16 +113,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(data!=null){
-            setSelectStatus(0);
-        }else{
-            setSelectStatus(2);
-        }
-    }
-
-    @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.bottom_bar_course_btn:
@@ -139,15 +131,28 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            boolean isLogin = data.getBooleanExtra("isLogin", false);
+            if (isLogin) {
+                setSelectStatus(2);
+            } else {
+                setSelectStatus(0);
+            }
+        }
+    }
     private void setMain() {
 
-        this.getSupportFragmentManager().beginTransaction().add(R.id.main_body,new CourseFragment()).commit();
-        setSelectStatus(0);
+        this.getSupportFragmentManager().beginTransaction().add(R.id.main_body,new MyinfoFragment()).commit();
+        setSelectStatus(2);
 
     }
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-            if((System.currentTimeMillis()-exitTime)>2000){
+            if((System.currentTimeMillis() - exitTime) > 2000){
                 Toast.makeText(MainActivity.this,"再按一次退出博学谷",Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             }else{
