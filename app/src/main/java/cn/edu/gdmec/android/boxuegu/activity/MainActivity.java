@@ -146,7 +146,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
     private void setMain() {
 
-        this.getSupportFragmentManager().beginTransaction().add(R.id.main_body,new MyinfoFragment()).commit();
+        this.getSupportFragmentManager().beginTransaction().replace(R.id.main_body,new MyinfoFragment()).commit();
         setSelectStatus(2);
 
     }

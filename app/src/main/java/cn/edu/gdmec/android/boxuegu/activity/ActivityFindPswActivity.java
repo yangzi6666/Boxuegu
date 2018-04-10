@@ -75,8 +75,7 @@ public class ActivityFindPswActivity extends Activity implements View.OnClickLis
        tv_main_title.setText("找回密码");
        tv_user_name.setVisibility(View.VISIBLE);
        et_user_name.setVisibility(View.VISIBLE);
-       tv_reset_psw.setVisibility(View.VISIBLE);
-       et_reset_psw.setVisibility(View.VISIBLE);
+
    }
    tv_back.setOnClickListener(new View.OnClickListener(){
        public void onClick(View v){
@@ -115,17 +114,22 @@ public class ActivityFindPswActivity extends Activity implements View.OnClickLis
             }else if (!validateName.equals(sp_security)){
                 Toast.makeText(this,"输入的密保不正确",Toast.LENGTH_SHORT).show();
                 return;
-            }else if(TextUtils.isEmpty(resetPsw)) {
-                Toast.makeText(this,"请输入新密码",Toast.LENGTH_SHORT).show();
-                return;
-            }else{
-                Toast.makeText(this, "新密码设置成功", Toast.LENGTH_SHORT).show();
-                savePsw(name,resetPsw);
-                Intent intent = new Intent(ActivityFindPswActivity.this, LoginActivity.class);
-                startActivity(intent);
-                ActivityFindPswActivity.this.finish();
+            } else {
+                tv_reset_psw.setVisibility(View.VISIBLE);
+                et_reset_psw.setVisibility(View.VISIBLE);
+                if (TextUtils.isEmpty(resetPsw)) {
+                    tv_reset_psw.setVisibility(View.VISIBLE);
+                    et_reset_psw.setVisibility(View.VISIBLE);
+                    Toast.makeText(this, "请输入新密码", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    Toast.makeText(this, "新密码设置成功", Toast.LENGTH_SHORT).show();
+                    savePsw(name, resetPsw);
+                    Intent intent = new Intent(ActivityFindPswActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    ActivityFindPswActivity.this.finish();
+                }
             }
-
         }
 
 
