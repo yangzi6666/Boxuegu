@@ -75,7 +75,7 @@ instance = this;
                 data.putExtra("isLogin",false);
                 setResult(RESULT_OK);
                 finish();
-                MainActivity.instance.finish();
+
                 break;
         }
     }
