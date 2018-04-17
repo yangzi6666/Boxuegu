@@ -20,13 +20,14 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + U_USERINFO+ "("
-        +"_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-        +"userName VARCHAR,"
-        +"nickName VARCHAR,"
-        +"sex VARCHAR,"
-        +"signature VARCHAR"
-        +")");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + U_USERINFO + " ( "
+        +"_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        +"userName VARCHAR, "
+        +"nickName VARCHAR, "
+        +"sex VARCHAR, "
+        +"signature VARCHAR, "
+        +"qq VARCHAR "
+        +" ) ");
     }
 
     @Override

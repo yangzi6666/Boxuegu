@@ -76,6 +76,7 @@ instance = this;
                 setResult(RESULT_OK);
                 finish();
 
+               MainActivity.instance.finish();
                 break;
         }
     }

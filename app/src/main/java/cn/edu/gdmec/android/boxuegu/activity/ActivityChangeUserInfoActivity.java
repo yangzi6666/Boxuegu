@@ -30,7 +30,7 @@ public class ActivityChangeUserInfoActivity extends Activity implements View.OnC
     private ImageView iv_delete;
     private String title,content;
     private  int flag;
-    private EditText editText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,9 @@ public class ActivityChangeUserInfoActivity extends Activity implements View.OnC
         iv_delete.setOnClickListener(this);
         tv_save.setOnClickListener(this);
 
-        et_content.setInputType(InputType.TYPE_CLASS_NUMBER);
+         if (flag == 3){
+         et_content.setInputType(InputType.TYPE_CLASS_NUMBER);
+}
 
         tv_save.setVisibility(View.VISIBLE);
         if(!TextUtils.isEmpty(content)){
@@ -109,7 +111,7 @@ public class ActivityChangeUserInfoActivity extends Activity implements View.OnC
                            et_content.setText(newStr);
                            editable = et_content.getText();
 
-                           editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
                            int newLen = editable.length();
                            if(selEndIndex>newLen){
                                selEndIndex = editable.length();
@@ -119,6 +121,7 @@ public class ActivityChangeUserInfoActivity extends Activity implements View.OnC
                        break;
                    case 3:
                        if (len>12){
+
                            int selEndIndex = Selection.getSelectionEnd(editable);
                            String str = editable.toString();
                            String newStr = str.substring(0,12);
