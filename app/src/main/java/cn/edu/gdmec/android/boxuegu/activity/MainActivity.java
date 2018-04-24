@@ -140,8 +140,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             if (isLogin) {
                 setSelectStatus(2);
             } else {
-                setSelectStatus(0);
+                setSelectStatus(2);
             }
+        }
+        if (requestCode == 000){
+            setSelectStatus(1);
         }
     }
     private void setMain() {
